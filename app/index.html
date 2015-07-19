@@ -4,9 +4,33 @@
     <meta charset="utf-8">
     <title>YouPost</title>
     <link rel="stylesheet" type="text/css" href="bower_components/normalize.css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="dist/app.css">
   </head>
-  <body>
-    <h1>YouPost</h1>
+
+  <body class="container-fluid">
+    <div class="yp-banner row clearfix">
+      <div class="yp-title">
+        <span class="yp-header">YouPost</span>
+        <span class="yp-sub-header"> - Insert clever sub title here</span>
+      </div>
+      <div class="yp-search-box">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="https://www.youtube.com/watch?v=TRJYCW_dCN4">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Watch</button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="yp-body row clearfix">
+      <div class="yp-video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/i5ZM0-f5_CU" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="yp-posts-container">
+        
+      </div>
+    </div>
   </body>
 </html>

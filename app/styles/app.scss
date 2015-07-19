@@ -1,3 +1,53 @@
+$bannerHeight: 71px;
+$postsContainerWidth: 400px;
+
 html, body {
+  height: 100%;
+}
+
+.yp-banner {
+  background-color: #cc181e;
+  padding: 0 15px;
+  height: $bannerHeight;
+}
+
+.yp-title {
+  .yp-header {
+    font-size: 36px;
+  }
+  text-align: center;
+  color: white;
+  width: 50%;
+  display: inline-block;
+  float: left;
+  padding: 10px;
+}
+
+.yp-search-box {
+  top: 25px;
+  width: 50%;
+  display: inline-block;
+  float: left;
+  position: relative;
+}
+
+.yp-body {
+  height: calc(100% - #{$bannerHeight});
+}
+
+.yp-video-container {
+  float: left;
+  width: calc(100% - #{$postsContainerWidth});
+  height: 100%;
+  font-size: 0;
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.yp-posts-container {
+  float: left;
+  width: $postsContainerWidth;
   height: 100%;
 }
