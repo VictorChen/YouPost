@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
     <title>YouPost</title>
-    <link rel="stylesheet" type="text/css" href="bower_components/normalize.css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <meta charset="utf-8">
+    <meta name="google-signin-client_id" content="21479359250-a59luaulhnmd9o6kpeqtqoa7oo5jfgiq.apps.googleusercontent.com">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="dist/app.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="scripts/app.js"></script>
   </head>
 
   <body class="container-fluid">
@@ -16,17 +23,18 @@
       </div>
       <div class="yp-search-box">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="https://www.youtube.com/watch?v=TRJYCW_dCN4">
+          <input type="text" class="yp-url form-control" placeholder="https://www.youtube.com/watch?v=TRJYCW_dCN4">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Watch</button>
+            <button class="yp-watch btn btn-default" type="button">Watch</button>
           </span>
         </div>
       </div>
+      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
     </div>
 
     <div class="yp-body row clearfix">
       <div class="yp-video-container">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/i5ZM0-f5_CU" frameborder="0" allowfullscreen></iframe>
+        <iframe src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="yp-posts-container">
         
