@@ -1,27 +1,9 @@
 (function($) {
   'use strict';
 
-  var user;
   var $urlInput;
   var $watchBtn;
   var $videoContainer;
-
-  /**
-   * Callback for google's sign in button
-   * @param  {Object} googleUser google's user object
-   */
-  window.onSignIn = function(googleUser) {
-    // Useful data for your client-side scripts:
-    user = googleUser.getBasicProfile();
-    console.log('ID: ' + user.getId()); // Don't send this directly to your server!
-    console.log('Name: ' + user.getName());
-    console.log('Image URL: ' + user.getImageUrl());
-    console.log('Email: ' + user.getEmail());
-
-    // The ID token you need to pass to your backend:
-    // var idToken = googleUser.getAuthResponse().id_token;
-    // console.log('ID Token: ' + idToken);
-  };
 
   function getYoutubeVideo(url) {
     var idRegex = /youtube\.com\/watch\?v=(.*?)($|&)/i;
