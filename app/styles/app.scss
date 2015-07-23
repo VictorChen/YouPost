@@ -15,6 +15,7 @@ html, body {
   .yp-header {
     font-size: 36px;
   }
+  width: 285px;
   color: white;
   display: inline-block;
   float: left;
@@ -30,8 +31,7 @@ html, body {
   padding-left: 10px;
 }
 
-.g-signin2 {
-  display: inline-block;
+.yp-login {
   position: relative;
   top: 25px;
   float: right;

@@ -11,25 +11,32 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!--
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="scripts/app.js"></script>
+    -->
   </head>
 
   <body class="container-fluid">
     <div class="yp-banner row clearfix">
       <div class="yp-title">
         <span class="yp-header">YouPost</span>
-        <span class="yp-sub-header"> - Insert clever sub title here</span>
       </div>
       <div class="yp-search-box">
         <div class="input-group">
           <input type="text" class="yp-url form-control" placeholder="https://www.youtube.com/watch?v=TRJYCW_dCN4">
           <span class="input-group-btn">
-            <button class="yp-watch btn btn-default" type="button">Watch</button>
+            <button class="yp-watch btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </button>
           </span>
         </div>
       </div>
-      <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+      <button class="yp-login btn btn-primary">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        Log In
+      </button>
     </div>
 
     <div class="yp-body row clearfix">
@@ -37,8 +44,13 @@
         <iframe src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
       </div>
       <div class="yp-posts-container">
-        
+        <div class="yp-top-posts"></div>
+        <div class="yp-recent-posts"></div>
+        <div class="yp-add-post"></div>
       </div>
     </div>
+
+    <script src="scripts/login.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
   </body>
 </html>

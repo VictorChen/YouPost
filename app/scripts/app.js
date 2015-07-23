@@ -10,7 +10,7 @@
    * Callback for google's sign in button
    * @param  {Object} googleUser google's user object
    */
-  window.loginUser = function(googleUser) {
+  window.onSignIn = function(googleUser) {
     // Useful data for your client-side scripts:
     user = googleUser.getBasicProfile();
     console.log('ID: ' + user.getId()); // Don't send this directly to your server!
