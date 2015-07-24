@@ -3,25 +3,17 @@
   <head>
     <title>YouPost</title>
     <meta charset="utf-8">
-    <meta name="google-signin-client_id" content="21479359250-a59luaulhnmd9o6kpeqtqoa7oo5jfgiq.apps.googleusercontent.com">
-    
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="dist/app.css">
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-    <!--
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="scripts/app.js"></script>
-    -->
   </head>
 
   <body class="container-fluid">
     <div class="yp-banner row clearfix">
       <div class="yp-title">
-        <span class="yp-header">YouPost</span>
+        <a href="." class="yp-header">YouPost</a>
       </div>
       <div class="yp-search-box">
         <div class="input-group">
@@ -47,11 +39,13 @@
     </div>
 
     <div class="yp-body row clearfix">
-      <div class="yp-video-container">
-        <iframe src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
+      <div class="yp-video-container embed-responsive">
+        <iframe src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" allowfullscreen></iframe>
       </div>
       <div class="yp-posts-container">
-        <div class="yp-top-posts"></div>
+        <div class="yp-top-posts">
+          
+        </div>
         <div class="yp-recent-posts"></div>
         <div class="yp-add-post"></div>
       </div>

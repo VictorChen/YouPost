@@ -1,9 +1,17 @@
 (function($) {
   'use strict';
 
-  var $urlInput;
-  var $watchBtn;
-  var $videoContainer;
+  // Cache DOM elements
+  var $urlInput = $('.yp-url');
+  var $videoContainer = $('.yp-video-container');
+  var user;
+  
+  $('.yp-watch').click(function() {
+    var url = $.trim($urlInput.val());
+    if (url) {
+      $videoContainer.empty().append(getYoutubeVideo(url));
+    }
+  });
 
   function getYoutubeVideo(url) {
     var idRegex = /youtube\.com\/watch\?v=(.*?)($|&)/i;
@@ -16,19 +24,18 @@
     return '<iframe src="https://www.youtube.com/embed/' + videoID + '" frameborder="0" allowfullscreen></iframe>';
   }
 
-  $(function() {
-    $urlInput = $('.yp-url');
-    $watchBtn = $('.yp-watch');
-    $videoContainer = $('.yp-video-container');
+  function login(user) {
+    user = user;
+    console.log(user);
+  }
 
-    $watchBtn.click(function() {
-      var url = $.trim($urlInput.val());
+  function logout() {
+    user = null;
+  }
 
-      if (url) {
-        $videoContainer.empty();
-        $videoContainer.append(getYoutubeVideo(url));
-      }
-    });
-  });
+  window.youpost = {
+    login: login,
+    logout: logout
+  };
 
 })(jQuery);

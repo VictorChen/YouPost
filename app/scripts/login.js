@@ -1,6 +1,5 @@
-(function() {
+(function($, youpost) {
   'use strict';
-  /*jshint camelcase: false */
 
   // Google api
   var gapi;
@@ -12,26 +11,39 @@
   var clientID = '21479359250-a59luaulhnmd9o6kpeqtqoa7oo5jfgiq.apps.googleusercontent.com';
 
   var authScopes = [
-    'https://www.googleapis.com/auth/youtube.readonly'
+    'https://www.googleapis.com/auth/youtube.readonly',
+    'https://www.googleapis.com/auth/userinfo.email'
   ];
 
   // Upon loading, the Google APIs JS client automatically invokes 
   // this callback.
   window.googleApiClientReady = function() {
     gapi = window.gapi;
+    gapi.auth.init(function() {
+      setTimeout(function() {
+        checkAuth(true);
+      }, 1);
+    });
+
     attachEvents();
   };
 
+  function checkAuth(immediate) {
+    /*jshint camelcase: false */
+    gapi.auth.authorize({
+      client_id: clientID,
+      scope: authScopes,
+      immediate: immediate,
+      cookie_policy: 'single_host_origin'
+    }, handleAuthResult);
+  }
+
   function attachEvents() {
+
     // Make the login clickable. Attempt a non-immediate OAuth 2.0
     // client flow.
     $('.yp-login').click(function() {
-      gapi.auth.authorize({
-        client_id: clientID,
-        scope: authScopes,
-        immediate: false,
-        cookie_policy: 'single_host_origin'
-        }, handleAuthResult);
+      checkAuth(false);
     });
 
     $('.yp-logout').click(function() {
@@ -40,6 +52,7 @@
       $('.yp-login').removeClass('hidden');
       $('.yp-logout').addClass('hidden');
       gapi.auth.signOut();
+      youpost.logout();
     });
   }
 
@@ -50,26 +63,23 @@
       // content that should be visible after authorization succeeds.
       $('.yp-login').addClass('hidden');
       $('.yp-logout').removeClass('hidden');
-      loadAPIClientInterfaces();
+      retrieveUserInfo();
+    } else {
+      attachEvents();
     }
   }
 
-  // Load the client interfaces for the YouTube Analytics and Data APIs, which
-  // are required to use the Google APIs JS client. More info is available at
-  // http://code.google.com/p/google-api-javascript-client/wiki/GettingStarted#Loading_the_Client
-  function loadAPIClientInterfaces() {
-    gapi.client.load('youtube', 'v3', function() {
-      // Fetch user's channel
-      var list = gapi.client.youtube.channels.list({
-        part: 'snippet', mine: true
-      });
+  function retrieveUserInfo() {
+    /*jshint camelcase: false */
 
-      list.execute(function(result) {
-        var username = result.items[0].snippet.title;
-        $('.yp-welcome-user').removeClass('hidden');
-        $('.yp-username').text(username);
-      });
+    var accessToken = gapi.auth.getToken().access_token;
+    var url = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + accessToken;
+
+    $.getJSON(url, function(userProfile) {
+      $('.yp-welcome-user').removeClass('hidden');
+      $('.yp-username').text(userProfile.name);
+      youpost.login(userProfile);
     });
   }
 
-})();
+})(window.jQuery, window.youpost);
