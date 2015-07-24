@@ -2,6 +2,7 @@
   'use strict';
   /*jshint camelcase: false */
 
+  // Google api
   var gapi;
 
   // The client ID is obtained from the Google Developers Console
@@ -18,22 +19,28 @@
   // this callback.
   window.googleApiClientReady = function() {
     gapi = window.gapi;
-    gapi.auth.init(function() {
-      setTimeout(checkAuth, 1);
-    });
+    attachEvents();
   };
 
-  // Attempt the immediate OAuth 2.0 client flow as soon as the page loads.
-  // If the currently logged-in Google Account has previously authorized
-  // the client specified as the clientID, then the authorization
-  // succeeds with no user intervention. Otherwise, it fails and the
-  // user interface that prompts for authorization needs to display.
-  function checkAuth() {
-    gapi.auth.authorize({
-      client_id: clientID,
-      scope: authScopes,
-      immediate: true
-    }, handleAuthResult);
+  function attachEvents() {
+    // Make the login clickable. Attempt a non-immediate OAuth 2.0
+    // client flow.
+    $('.yp-login').click(function() {
+      gapi.auth.authorize({
+        client_id: clientID,
+        scope: authScopes,
+        immediate: false,
+        cookie_policy: 'single_host_origin'
+        }, handleAuthResult);
+    });
+
+    $('.yp-logout').click(function() {
+      $('.yp-welcome-user').addClass('hidden');
+      $('.yp-username').text('');
+      $('.yp-login').removeClass('hidden');
+      $('.yp-logout').addClass('hidden');
+      gapi.auth.signOut();
+    });
   }
 
   // Handle the result of a gapi.auth.authorize() call.
@@ -41,18 +48,9 @@
     if (authResult && !authResult.error) {
       // Authorization was successful. Hide authorization prompts and show
       // content that should be visible after authorization succeeds.
-      $('.yp-login').hide();
+      $('.yp-login').addClass('hidden');
+      $('.yp-logout').removeClass('hidden');
       loadAPIClientInterfaces();
-    } else {
-      // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
-      // client flow. The current function is called when that flow completes.
-      $('.yp-login').click(function() {
-        gapi.auth.authorize({
-          client_id: clientID,
-          scope: authScopes,
-          immediate: false
-          }, handleAuthResult);
-      });
     }
   }
 
@@ -61,18 +59,16 @@
   // http://code.google.com/p/google-api-javascript-client/wiki/GettingStarted#Loading_the_Client
   function loadAPIClientInterfaces() {
     gapi.client.load('youtube', 'v3', function() {
-      handleAPILoaded();
-    });
-  }
+      // Fetch user's channel
+      var list = gapi.client.youtube.channels.list({
+        part: 'snippet', mine: true
+      });
 
-  function handleAPILoaded() {
-    // Fetch user's channel
-    var list = gapi.client.youtube.channels.list({
-      part: 'snippet', mine: true
-    });
-
-    list.execute(function(result){
-      window.alert('Hello ' + result.items[0].snippet.title);
+      list.execute(function(result) {
+        var username = result.items[0].snippet.title;
+        $('.yp-welcome-user').removeClass('hidden');
+        $('.yp-username').text(username);
+      });
     });
   }
 

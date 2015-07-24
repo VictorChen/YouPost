@@ -6,6 +6,7 @@ html, body {
 }
 
 .yp-banner {
+  position: relative;
   background-color: #cc181e;
   padding: 0 15px;
   height: $bannerHeight;
@@ -31,10 +32,18 @@ html, body {
   padding-left: 10px;
 }
 
-.yp-login {
+.yp-login, .yp-logout {
   position: relative;
   top: 25px;
   float: right;
+}
+
+.yp-welcome-user {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3px;
+  color: #690000;
 }
 
 .yp-body {
