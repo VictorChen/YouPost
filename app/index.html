@@ -40,17 +40,24 @@
 
     <div class="yp-body row clearfix">
       <div class="yp-video-container embed-responsive">
-        <iframe src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" allowfullscreen></iframe>
+        <iframe id="youtube-video" src="https://www.youtube.com/embed/i5ZM0-f5_CU?&iv_load_policy=3" enablejsapi="1" allowfullscreen></iframe>
       </div>
       <div class="yp-posts-container">
         <div class="yp-top-posts">
           
         </div>
         <div class="yp-recent-posts"></div>
-        <div class="yp-add-post"></div>
+        <div class="yp-add-post">
+          <div id="yp-profile-img"></div>
+          <div id="yp-post-area">
+            <textarea placeholder="What are you thinking right now?"></textarea>
+          </div>
+          <button id="yp-add-btn" class="btn btn-primary">Post</button>
+        </div>
       </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/login.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>

@@ -13,19 +13,41 @@
     }
   });
 
-  function getYoutubeVideo(url) {
+  $('#yp-add-btn').click(function() {
+    // var player = new YT.Player('youtube-video');
+    var url = $('.yp-video-container iframe').attr('src');
+    var comment = $('#yp-post-area textarea').val();
+
+    $.post('server/insert.php', {
+      // TODO: don't send email directly, this is not safe.
+      // Users can pretend to be someone else, send back the
+      // auth token instead.
+      email: user.email,
+      content: comment,
+      video: getVideoId(url),
+      vtime: 20
+    });
+  });
+
+  function getVideoId(url) {
     var idRegex = /youtube\.com\/watch\?v=(.*?)($|&)/i;
     var videoID = url.match(idRegex);
-
     if (videoID) {
       videoID = videoID[1];
     }
+    return videoID;
+  }
 
-    return '<iframe src="https://www.youtube.com/embed/' + videoID + '" frameborder="0" allowfullscreen></iframe>';
+  function getYoutubeVideo(url) {
+    var videoID = getVideoId(url);
+
+    // TODO: use youtube api for creating the iframe/player
+    return '<iframe src="https://www.youtube.com/embed/' + videoID + '" frameborder="0" enablejsapi="1" allowfullscreen></iframe>';
   }
 
   function login(user) {
     user = user;
+    $('#yp-profile-img').empty().append('<img src="' + user.picture + '">');
     console.log(user);
   }
 

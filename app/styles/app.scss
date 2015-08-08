@@ -1,5 +1,6 @@
 $bannerHeight: 71px;
 $postsContainerWidth: 400px;
+$addPostHeight: 100px;
 
 html, body {
   height: 100%;
@@ -67,4 +68,60 @@ html, body {
   float: left;
   width: $postsContainerWidth;
   height: 100%;
+}
+
+.yp-add-post {
+  position: relative;
+  height: $addPostHeight;
+  background-color: #F7F7F7;
+}
+
+.yp-top-posts, .yp-recent-posts {
+  height: calc((100% - #{$addPostHeight}) / 2)
+}
+
+.yp-top-posts {
+  background-color: #323232;
+}
+
+.yp-recent-posts {
+  background-color: #DADADA;
+}
+
+#yp-profile-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 100%;
+  background-color: black;
+
+  img {
+    position: absolute;
+    top: 26px;
+    width: 48px;
+    height: 48px;
+    left: 2px;
+  }
+}
+
+#yp-post-area {
+  position: absolute;
+  height: 100%;
+  width: 300px;
+  left: 52px;
+
+  textarea {
+    position: absolute;
+    height: calc(100% - 1px);
+    width: 100%;
+  }
+}
+
+#yp-add-btn {
+  position: absolute;
+  left: 352px;
+  height: 100%;
+  width: 48px;
+  border-radius: 0;
 }
