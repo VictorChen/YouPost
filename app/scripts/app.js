@@ -20,6 +20,25 @@
     return videoID;
   }
 
+  function prettyPrintTime(time) {
+    // Hours, minutes and seconds
+    var hrs = Math.floor(time / 3600);
+    var mins = Math.floor((time % 3600) / 60);
+    var secs = time % 60;
+
+    // Output like '1:01' or '4:03:59' or '123:03:59'
+    var ret = '';
+
+    if (hrs > 0) {
+      ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+    }
+
+    ret += '' + mins + ':' + (secs < 10 ? '0' : '');
+    ret += '' + secs;
+
+    return ret;
+  }
+
   function createPost(post) {
     // TODO: would be cleaner to use a template library
     return '<div class="post clearfix">' +
@@ -31,16 +50,18 @@
              '</div>' +
              '<div class="post-footer">' +
                '<div class="post-time">' +
-                 post.vtime +
+                 prettyPrintTime(post.vtime) +
                '</div>' +
                '<div class="post-date">' +
                  post.timestamp +
                '</div>' +
                '<div class="post-like">' +
-                 post.like +
-                 '<button class="glyphicon glyphicon-thumbs-up"' +
+                 '<span class="post-like-count">' +
+                   post.likes +
+                 '</span>' +
+                 '<button class="like glyphicon glyphicon-thumbs-up"' +
                  'aria-hidden="true"></button>' +
-                 '<button class="glyphicon glyphicon-thumbs-down"' +
+                 '<button class="dislike glyphicon glyphicon-thumbs-down"' +
                  'aria-hidden="true"></button>' +
                '</div>' +
            '</div>';
@@ -62,6 +83,7 @@
       vtime: player.getCurrentTime()
     }).done(function(data) {
       displayRecentPosts(data);
+      stopFetching();
       timeoutId = setTimeout(startFetching, 5000);
     });
   }

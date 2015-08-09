@@ -86,6 +86,7 @@ html, body {
 
 .yp-recent-posts {
   background-color: #DADADA;
+  overflow: auto;
 }
 
 #yp-profile-img {
@@ -155,8 +156,17 @@ html, body {
 
     .post-like {
       float: right;
-      button:hover {
+
+      .post-like-count {
+        margin-right: 5px;
+      }
+
+      .like:hover {
         color: green;
+      }
+
+      .dislike:hover {
+        color: red;
       }
     }
   }
