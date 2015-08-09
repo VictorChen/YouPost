@@ -21,6 +21,7 @@
   "jquery": true,
   "globals": {
     "define": true,
-    "window": true
+    "window": true,
+    "YT": true
   }
 }
