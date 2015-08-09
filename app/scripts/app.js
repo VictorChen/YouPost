@@ -41,7 +41,7 @@
 
   function createPost(post) {
     // TODO: would be cleaner to use a template library
-    return '<div class="post clearfix">' +
+    return '<div class="post clearfix" post-id="' + post.id + '">' +
              '<div class="post-email" title="' + post.email + '">' +
                post.email +
              '</div>' +
