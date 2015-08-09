@@ -20,13 +20,36 @@
     return videoID;
   }
 
+  function createPost(post) {
+    // TODO: would be cleaner to use a template library
+    return '<div class="post clearfix">' +
+             '<div class="post-email" title="' + post.email + '">' +
+               post.email +
+             '</div>' +
+             '<div class="post-content">' +
+               post.content +
+             '</div>' +
+             '<div class="post-footer">' +
+               '<div class="post-time">' +
+                 post.vtime +
+               '</div>' +
+               '<div class="post-date">' +
+                 post.timestamp +
+               '</div>' +
+               '<div class="post-like">' +
+                 post.like +
+                 '<button class="glyphicon glyphicon-thumbs-up"' +
+                 'aria-hidden="true"></button>' +
+                 '<button class="glyphicon glyphicon-thumbs-down"' +
+                 'aria-hidden="true"></button>' +
+               '</div>' +
+           '</div>';
+  }
+
   function displayRecentPosts(data) {
     $recentPosts.empty();
     $.each(data, function(index, post) {
-      var postHtml = '<div class="post"><div class="post-email">' +
-        post.email + ': </div><div class="post-content">' + post.content +
-        '</div></div>';
-
+      var postHtml = createPost(post);
       $recentPosts.append(postHtml);
     });
   }

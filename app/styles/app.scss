@@ -125,3 +125,39 @@ html, body {
   width: 48px;
   border-radius: 0;
 }
+
+.post {
+  padding: 3px;
+
+  &:nth-child(even) {
+    background-color: #ECECEC;
+  }
+
+  .post-email {
+    opacity: 0.4;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .post-footer {
+    opacity: 0.4;
+
+    .post-time {
+      float: left;
+      margin-right: 10px;
+    }
+
+    .post-date {
+      float: left;
+    }
+
+    .post-like {
+      float: right;
+      button:hover {
+        color: green;
+      }
+    }
+  }
+}
