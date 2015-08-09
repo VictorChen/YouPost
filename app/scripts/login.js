@@ -54,14 +54,18 @@
       
       // This doesn't work for some reason
       gapi.auth.signOut();
-      
-      // Send request to log out instead
-      $.get(url, function() {
-        $('.yp-welcome-user').addClass('hidden');
-        $('.yp-username').text('');
-        $('.yp-login').removeClass('hidden');
-        $('.yp-logout').addClass('hidden');
-        youpost.logout();
+
+      // Send request to log out manually instead
+      $.ajax({
+        url: url,
+        dataType: 'jsonp',
+        success:function() {
+          $('.yp-welcome-user').addClass('hidden');
+          $('.yp-username').text('');
+          $('.yp-login').removeClass('hidden');
+          $('.yp-logout').addClass('hidden');
+          youpost.logout();
+        }   
       });
     });
   }
