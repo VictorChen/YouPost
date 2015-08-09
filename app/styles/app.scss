@@ -82,6 +82,9 @@ html, body {
 
 .yp-top-posts {
   background-color: #323232;
+  overflow: auto;
+  border-bottom: 1px solid red;
+  color: white;
 }
 
 .yp-recent-posts {
@@ -127,12 +130,16 @@ html, body {
   border-radius: 0;
 }
 
+.yp-recent-posts .post:nth-child(even) {
+  background-color: #ECECEC;
+}
+
+.yp-top-posts .post:nth-child(even) {
+  background-color: #4D4D4D;
+}
+
 .post {
   padding: 3px;
-
-  &:nth-child(even) {
-    background-color: #ECECEC;
-  }
 
   .post-email {
     opacity: 0.4;

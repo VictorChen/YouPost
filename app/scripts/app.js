@@ -6,7 +6,9 @@
   var $postBox = $('#yp-post-area textarea');
   var $addBtn = $('#yp-add-btn');
   var $recentPosts = $('.yp-recent-posts');
-  var timeoutId;
+  var $topPosts = $('.yp-top-posts');
+  var recentTimeoutId;
+  var topTimeoutId;
 
   var user; // current user info
   var player; // current youtube player
@@ -67,29 +69,42 @@
            '</div>';
   }
 
-  function displayRecentPosts(data) {
-    $recentPosts.empty();
+  function displayPosts($container, data) {
+    $container.empty();
     $.each(data, function(index, post) {
       var postHtml = createPost(post);
-      $recentPosts.append(postHtml);
+      $container.append(postHtml);
     });
   }
 
   function startFetching() {
     /*jshint camelcase: false */
 
+    var videoId = player.getVideoData().video_id;
+    var currentTime = player.getCurrentTime();
+
     $.getJSON('server/recent.php', {
-      video: player.getVideoData().video_id,
-      vtime: player.getCurrentTime()
+      video: videoId,
+      vtime: currentTime
     }).done(function(data) {
-      displayRecentPosts(data);
-      stopFetching();
-      timeoutId = setTimeout(startFetching, 5000);
+      displayPosts($recentPosts, data);
+      clearTimeout(recentTimeoutId);
+      recentTimeoutId = setTimeout(startFetching, 5000);
+    });
+
+    $.getJSON('server/top.php', {
+      video: videoId,
+      vtime: currentTime
+    }).done(function(data) {
+      displayPosts($topPosts, data);
+      clearTimeout(topTimeoutId);
+      topTimeoutId = setTimeout(startFetching, 5000);
     });
   }
 
   function stopFetching() {
-    clearTimeout(timeoutId);
+    clearTimeout(recentTimeoutId);
+    clearTimeout(topTimeoutId);
   }
 
   function onPlayerStateChange(state) {

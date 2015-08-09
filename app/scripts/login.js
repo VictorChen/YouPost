@@ -47,12 +47,22 @@
     });
 
     $('.yp-logout').click(function() {
-      $('.yp-welcome-user').addClass('hidden');
-      $('.yp-username').text('');
-      $('.yp-login').removeClass('hidden');
-      $('.yp-logout').addClass('hidden');
+      /*jshint camelcase: false */
+
+      var url = 'https://accounts.google.com/o/oauth2/revoke?token=';
+      url += gapi.auth.getToken().access_token;
+      
+      // This doesn't work for some reason
       gapi.auth.signOut();
-      youpost.logout();
+      
+      // Send request to log out instead
+      $.get(url, function() {
+        $('.yp-welcome-user').addClass('hidden');
+        $('.yp-username').text('');
+        $('.yp-login').removeClass('hidden');
+        $('.yp-logout').addClass('hidden');
+        youpost.logout();
+      });
     });
   }
 
