@@ -92,6 +92,17 @@ module.exports = function(grunt) {
         assetsDirs: 'app/dist'
       }
     },
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {
+          'app/dist/index.html': 'app/dist/index.html'
+        }
+      }
+    },
     connect: {
       server: {
         options: {
@@ -112,6 +123,7 @@ module.exports = function(grunt) {
     'copy',
     'uglify',
     'filerev',
-    'usemin'
+    'usemin',
+    'htmlmin'
   ]);
 };
