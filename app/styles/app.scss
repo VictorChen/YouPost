@@ -134,8 +134,13 @@ html, body {
   background-color: #ECECEC;
 }
 
-.yp-top-posts .post:nth-child(even) {
-  background-color: #4D4D4D;
+.yp-top-posts {
+  .post:nth-child(even) {
+    background-color: #4D4D4D;
+  }
+  .post-like button{
+    color: #4D4D4D;
+  }
 }
 
 .post {
@@ -168,11 +173,11 @@ html, body {
         margin-right: 5px;
       }
 
-      .like:hover {
+      .like:hover, .like.active {
         color: green;
       }
 
-      .dislike:hover {
+      .dislike:hover, .dislike.active {
         color: red;
       }
     }

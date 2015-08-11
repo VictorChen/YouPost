@@ -7,8 +7,7 @@
   var $addBtn = $('#yp-add-btn');
   var $recentPosts = $('.yp-recent-posts');
   var $topPosts = $('.yp-top-posts');
-  var recentTimeoutId;
-  var topTimeoutId;
+  var fetchTimeout;
 
   var user; // current user info
   var player; // current youtube player
@@ -59,12 +58,14 @@
                '</div>' +
                '<div class="post-like">' +
                  '<span class="post-like-count">' +
-                   post.likes +
+                   (post.likes || 0) +
                  '</span>' +
-                 '<button class="like glyphicon glyphicon-thumbs-up"' +
-                 'aria-hidden="true"></button>' +
-                 '<button class="dislike glyphicon glyphicon-thumbs-down"' +
-                 'aria-hidden="true"></button>' +
+                 '<button class="like glyphicon glyphicon-thumbs-up' +
+                 (post.myLikes === 1? ' active' : '') +
+                 '" aria-hidden="true"></button>' +
+                 '<button class="dislike glyphicon glyphicon-thumbs-down' +
+                 (post.myLikes === -1? ' active' : '') +
+                 '" aria-hidden="true"></button>' +
                '</div>' +
            '</div>';
   }
@@ -80,31 +81,31 @@
   function startFetching() {
     /*jshint camelcase: false */
 
+    // Stop previous fetches
+    stopFetching();
+
     var videoId = player.getVideoData().video_id;
     var currentTime = player.getCurrentTime();
-
-    $.getJSON('server/recent.php', {
+    var email = (user && user.email) || '';
+    var fetchOptions = {
       video: videoId,
-      vtime: currentTime
-    }).done(function(data) {
-      displayPosts($recentPosts, data);
-      clearTimeout(recentTimeoutId);
-      recentTimeoutId = setTimeout(startFetching, 5000);
-    });
+      vtime: currentTime,
+      email: email
+    };
 
-    $.getJSON('server/top.php', {
-      video: videoId,
-      vtime: currentTime
-    }).done(function(data) {
-      displayPosts($topPosts, data);
-      clearTimeout(topTimeoutId);
-      topTimeoutId = setTimeout(startFetching, 5000);
+    var recentPromise = $.getJSON('server/recent.php', fetchOptions);
+    var topPromise = $.getJSON('server/top.php', fetchOptions);
+
+    $.when(recentPromise, topPromise).done(function(recentData, topData) {
+      displayPosts($recentPosts, recentData[0]);
+      displayPosts($topPosts, topData[0]);
+      clearTimeout(fetchTimeout);
+      fetchTimeout = setTimeout(startFetching, 5000);
     });
   }
 
   function stopFetching() {
-    clearTimeout(recentTimeoutId);
-    clearTimeout(topTimeoutId);
+    clearTimeout(fetchTimeout);
   }
 
   function onPlayerStateChange(state) {
@@ -174,6 +175,64 @@
     }).done(function() {
       $addBtn.removeClass('disabled');
       $postBox.removeAttr('disabled').val('');
+    });
+  });
+
+  $('.yp-posts-container').on('click', '.like, .dislike', function() {
+    if (!user) {
+      window.alert('Please log in to vote');
+      return;
+    }
+
+    var $this = $(this);
+    var isLike = $this.hasClass('like');
+    var $likeBtn = isLike? $this : $this.prev();
+    var $dislikeBtn = $likeBtn.next();
+    var isActive = $this.hasClass('active');
+    var isOtherActive = isLike? $dislikeBtn.hasClass('active') : $likeBtn.hasClass('active');
+    var count = +$likeBtn.prev().text();
+    var postId = $this.closest('.post').attr('post-id');
+    var liked;
+
+    if (isLike && isActive && !isOtherActive) {
+      count--;
+      liked = 0;
+    } else if (isLike && !isActive && !isOtherActive) {
+      count++;
+      liked = 1;
+    } else if (isLike && !isActive && isOtherActive) {
+      count += 2;
+      liked = 1;
+    } else if (!isLike && isActive && !isOtherActive) {
+      count++;
+      liked = 0;
+    } else if (!isLike && !isActive && !isOtherActive) {
+      count--;
+      liked = -1;
+    } else if (!isLike && !isActive && isOtherActive) {
+      count -= 2;
+      liked = -1;
+    } else {
+      // Both active? That's impossible... return!
+      return;
+    }
+
+    var $posts = $('.post[post-id="' + postId + '"]');
+    $posts.find('.post-like-count').text(count);
+
+    var $likes = $posts.find('.like').removeClass('active');
+    var $dislikes = $posts.find('.dislike').removeClass('active');
+
+    if (liked === 1) {
+      $likes.addClass('active');
+    } else if (liked === -1) {
+      $dislikes.addClass('active');
+    }
+
+    $.post('server/like.php', {
+      email: user.email,
+      postid: postId,
+      liked: liked
     });
   });
 
