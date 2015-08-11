@@ -40,13 +40,6 @@ module.exports = function(grunt) {
         }]
       }
     },
-    copy: {
-      dist: {
-        files: [
-          {'app/dist/index.html': 'app/index.html'}
-        ]
-      }
-    },
     cssmin: {
       dist: {
         options: {
@@ -61,10 +54,19 @@ module.exports = function(grunt) {
         }]
       }
     },
+    concat: {
+      options: {
+        separator: ';'
+      },
+      dist: {
+        src: ['app/scripts/app.js', 'app/scripts/login.js'],
+        dest: 'app/dist/app.js'
+      }
+    },
     uglify: {
       dist: {
         files: {
-          'app/dist/app.min.js': 'app/scripts/app.js'
+          'app/dist/app.min.js': 'app/dist/app.js'
         }
       }
     },
@@ -75,6 +77,13 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['app/dist/*.min*.js', 'app/dist/*.min*.css']
+      }
+    },
+    copy: {
+      dist: {
+        files: [
+          {'app/dist/index.html': 'app/index-dist.html'}
+        ]
       }
     },
     usemin: {
@@ -98,8 +107,9 @@ module.exports = function(grunt) {
     'clean',
     'sass',
     'autoprefixer',
-    'copy',
     'cssmin',
+    'concat',
+    'copy',
     'uglify',
     'filerev',
     'usemin'

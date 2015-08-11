@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>YouPost</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="app.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  </head>
+
+  <body class="container-fluid">
+    <div class="yp-banner row clearfix">
+      <div class="yp-title">
+        <a href="." class="yp-header">YouPost</a>
+      </div>
+      <div class="yp-search-box">
+        <div class="input-group">
+          <input type="text" class="yp-url form-control" placeholder="Paste YouTube link here (Ex: https://www.youtube.com/watch?v=i5ZM0-f5_CU)">
+          <span class="input-group-btn">
+            <button class="yp-watch btn btn-default" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </span>
+        </div>
+      </div>
+      <button class="yp-login btn btn-primary">
+        <span class="glyphicon glyphicon-user"></span>
+        Log In
+      </button>
+      <button class="yp-logout btn btn-default hidden">
+        <span class="glyphicon glyphicon-road"></span>
+        Log Out
+      </button>
+      <div class="yp-welcome-user hidden">
+        Signed in as <span class="yp-username"></span>
+      </div>
+    </div>
+
+    <div class="yp-body row clearfix">
+      <div id="player" class="yp-video-container embed-responsive"></div>
+      <div class="yp-posts-container">
+        <div class="yp-top-posts"></div>
+        <div class="yp-recent-posts"></div>
+        <div class="yp-add-post">
+          <div id="yp-profile-img"></div>
+          <div id="yp-post-area">
+            <textarea placeholder="What are you thinking right now?"></textarea>
+          </div>
+          <button id="yp-add-btn" class="btn btn-primary">Post</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="app.min.js"></script>
+    <script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+  </body>
+</html>
