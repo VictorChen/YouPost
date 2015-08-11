@@ -78,7 +78,7 @@
     });
   }
 
-  function startFetching() {
+  function startFetching(once) {
     /*jshint camelcase: false */
 
     // Stop previous fetches
@@ -99,8 +99,11 @@
     $.when(recentPromise, topPromise).done(function(recentData, topData) {
       displayPosts($recentPosts, recentData[0]);
       displayPosts($topPosts, topData[0]);
-      clearTimeout(fetchTimeout);
-      fetchTimeout = setTimeout(startFetching, 5000);
+
+      if (!once) {
+        clearTimeout(fetchTimeout);
+        fetchTimeout = setTimeout(startFetching, 5000);
+      }
     });
   }
 
@@ -160,7 +163,12 @@
       return;
     }
 
-    var comment = $postBox.val();
+    var comment = $.trim($postBox.val());
+
+    if (comment === '') {
+      return;
+    }
+
     $addBtn.addClass('disabled');
     $postBox.attr('disabled', 'disabled');
 
@@ -175,6 +183,7 @@
     }).done(function() {
       $addBtn.removeClass('disabled');
       $postBox.removeAttr('disabled').val('');
+      startFetching(player.getPlayerState() !== YT.PlayerState.PLAYING);
     });
   });
 
