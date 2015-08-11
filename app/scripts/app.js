@@ -123,7 +123,6 @@
   function login(ytUser) {
     user = ytUser;
     $('#yp-profile-img').empty().append('<img src="' + user.picture + '">');
-    console.log(user);
   }
 
   function logout() {
